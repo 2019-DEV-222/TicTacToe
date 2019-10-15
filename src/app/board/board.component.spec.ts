@@ -157,8 +157,27 @@ describe('Players cannot play on a played position', function() {
       component.currentPlayer = currentPlayer;
       component.updateBoard(rowIndex, colIndex);
       fixture.detectChanges();
-      
+
       expect(component.isThreeVertically()).toBeFalsy();
+      expect(component.isGameOver).toBeFalsy();
+    });
+    
+    it('should continue game if no player has three in a row diagonally', function () {
+      rowIndex = 2;
+      colIndex = 0;
+      currentPlayer = blockEnum.oPlayer;
+
+      board = [
+        [blockEnum.xPlayer, blockEnum.EMPTY, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.EMPTY, blockEnum.EMPTY, blockEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isThreeDiagonally()).toBeFalsy();
       expect(component.isGameOver).toBeFalsy();
     });
   });
