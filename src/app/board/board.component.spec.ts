@@ -161,7 +161,7 @@ describe('Players cannot play on a played position', function() {
       expect(component.isThreeVertically()).toBeFalsy();
       expect(component.isGameOver).toBeFalsy();
     });
-    
+
     it('should continue game if no player has three in a row diagonally', function () {
       rowIndex = 2;
       colIndex = 0;
@@ -177,8 +177,29 @@ describe('Players cannot play on a played position', function() {
       component.currentPlayer = currentPlayer;
       component.updateBoard(rowIndex, colIndex);
       fixture.detectChanges();
+
       expect(component.isThreeDiagonally()).toBeFalsy();
       expect(component.isGameOver).toBeFalsy();
+    });
+
+    it('should continue game if all the blocks are not filled yet', function() {
+      rowIndex = 1;
+      colIndex = 2;
+
+      currentPlayer = blockEnum.xPlayer;
+
+      board =  [
+        [blockEnum.xPlayer, blockEnum.EMPTY, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+
+      expect(component.isBoardFull()).toBeFalsy();
     });
   });
 });

@@ -40,7 +40,10 @@ export class BoardComponent implements OnInit {
     if (this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally())
      {
       this.isGameOver = true; 
-    }    
+    }  
+    else if (this.isBoardFull()) {
+      this.isGameOver = true;    
+    }     
     else{
       this.togglePlayer();
     }   
@@ -82,5 +85,19 @@ export class BoardComponent implements OnInit {
     threeInDiagonal = threeInLeftDiagonal||threeInRightDiagonal;
     return threeInDiagonal;
   }
- 
-}
+
+  isBoardFull(): boolean {
+    let threeInLine = false;
+
+    for (const colArray of this.board){
+      for (const blockItem of colArray){
+        if (blockItem === blockEnum.EMPTY){
+          return false;
+        }
+      }
+    }    
+    threeInLine = !(this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
+    return threeInLine;
+  }
+} 
+
