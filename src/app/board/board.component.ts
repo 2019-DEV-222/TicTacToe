@@ -37,7 +37,7 @@ export class BoardComponent implements OnInit {
   updateBoard(rowIndex: number, colIndex: number): void {
     if (!this.isGameOver && this.board[rowIndex][colIndex] === blockEnum.EMPTY) {
     this.board[rowIndex][colIndex] = this.currentPlayer;
-    if (this.isThreeHorizontally()) {
+    if (this.isThreeHorizontally()|| this.isThreeVertically()) {
       this.isGameOver = true; 
     }    
     else{
@@ -59,5 +59,15 @@ export class BoardComponent implements OnInit {
       }
     }
     return threeHorizontally;
+  }
+
+  isThreeVertically(): boolean {    
+    let threeVertically = false;  
+    for (let colIndex = 0; colIndex < 3; colIndex++) {
+      if (!threeVertically) {
+        threeVertically = this.utilService.checkEquality(this.board[0][colIndex], this.board[1][colIndex], this.board[2][colIndex]);
+      }
+    }
+    return threeVertically;
   }
 }
