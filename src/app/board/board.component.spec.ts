@@ -26,6 +26,7 @@ describe('BoardComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   describe('X always goes first', function () {
 
     let rowIndex: number;
@@ -50,6 +51,23 @@ describe('BoardComponent', () => {
     });
 
   });
+
+describe('Players cannot play on a played position', function() {
+    let rowIndex: number;
+    let colIndex: number;
+    let board: blockEnum[][];
+
+    beforeEach (function() {
+      ({ rowIndex, colIndex, board } = currentMoveDetails(fixture, rowIndex, colIndex, board, component));
+    });
+
+    it('should not let player to update the board on a played position', function() {
+      
+     expect(component.board[rowIndex][colIndex]).toEqual(board[rowIndex][colIndex]);
+     expect(fixture.nativeElement.querySelector('.block').innerText).toEqual('X');
+    });
+  });
+
 });
 
 function triggerUpdate(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
@@ -65,4 +83,20 @@ function triggerUpdate(fixture: ComponentFixture<BoardComponent>, rowIndex: numb
   component.updateBoard(rowIndex, colIndex);
   fixture.detectChanges();
   return { rowIndex, colIndex };
+}
+
+function currentMoveDetails(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, board: blockEnum[][], component: BoardComponent) {
+ 
+  rowIndex = 0;
+  colIndex = 0;
+  board = [
+    [blockEnum.xPlayer, blockEnum.xPlayer, blockEnum.EMPTY],
+    [blockEnum.EMPTY, blockEnum.oPlayer, blockEnum.EMPTY],
+    [blockEnum.EMPTY, blockEnum.oPlayer, blockEnum.EMPTY]
+  ]; 
+  component.board = board;
+  component.currentPlayer = blockEnum.oPlayer; 
+  component.updateBoard(rowIndex, colIndex);
+  fixture.detectChanges();
+  return { rowIndex, colIndex, board };
 }

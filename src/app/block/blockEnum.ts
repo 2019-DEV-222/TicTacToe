@@ -1,4 +1,5 @@
 export enum blockEnum {
     EMPTY = '',
-    xPlayer = 'X'  
+    xPlayer = 'X',
+    oPlayer = 'O'
 }
