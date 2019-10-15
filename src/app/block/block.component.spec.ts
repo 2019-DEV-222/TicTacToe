@@ -24,7 +24,7 @@ describe('BlockComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  describe('block has states `EMPTY` OR `X`', function() {
+  describe('block has states `EMPTY` OR `X` or `O`', function() {
 
     it('should have an EMPTY state initially', () => {
       component.colIndex = 0;
@@ -40,6 +40,15 @@ describe('BlockComponent', () => {
       fixture.detectChanges();
 
       expect(fixture.nativeElement.querySelector('.block').innerText).toEqual(blockEnum.xPlayer);
+    });    
+
+    it('should update with `O` when Player `O` makes a move', () => {
+      component.colIndex = 2;
+      component.rowIndex = 2;
+      component.blockItem = blockEnum.oPlayer;
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.block').innerText).toEqual(blockEnum.oPlayer);
     });    
   });
 });

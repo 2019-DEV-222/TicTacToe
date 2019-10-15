@@ -32,6 +32,12 @@ export class BoardComponent implements OnInit {
   updateBoard(rowIndex: number, colIndex: number): void {
     if (this.board[rowIndex][colIndex] === blockEnum.EMPTY) {
     this.board[rowIndex][colIndex] = this.currentPlayer;
+    this.togglePlayer();
    }  
+  }
+
+  togglePlayer(): void {
+    this.currentPlayer = this.currentPlayer === blockEnum.xPlayer ? blockEnum.oPlayer : blockEnum.xPlayer;
+    this.ResultMessage = `It's Player ${this.currentPlayer}'s turn`;
   }
 }
