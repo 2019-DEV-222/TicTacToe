@@ -1,0 +1,11 @@
+.board {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.result {
+    margin-bottom: 20px;
+    font-size: 1.3em;
+} 
