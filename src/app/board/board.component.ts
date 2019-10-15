@@ -37,12 +37,12 @@ export class BoardComponent implements OnInit {
   updateBoard(rowIndex: number, colIndex: number): void {
     if (!this.isGameOver && this.board[rowIndex][colIndex] === blockEnum.EMPTY) {
     this.board[rowIndex][colIndex] = this.currentPlayer;
-    if (this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally())
-     {
+    if (this.isBoardFull()) {
       this.isGameOver = true; 
-    }  
-    else if (this.isBoardFull()) {
+    }   
+    else if (this.isGameWon()) {
       this.isGameOver = true;    
+      this.ResultMessage = `Player ${this.currentPlayer} wins the game!`;
     }     
     else{
       this.togglePlayer();
@@ -99,5 +99,12 @@ export class BoardComponent implements OnInit {
     threeInLine = !(this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
     return threeInLine;
   }
+
+  isGameWon(): boolean {
+    let threeInLine = false;
+    threeInLine = (this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
+    return threeInLine;
+  }
+
 } 
 

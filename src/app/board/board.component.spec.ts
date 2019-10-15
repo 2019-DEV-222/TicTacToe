@@ -202,6 +202,56 @@ describe('Players cannot play on a played position', function() {
       expect(component.isBoardFull()).toBeFalsy();
     });
   });
+
+  describe('should be game over if any player gets 3 in a row', function(){
+
+    let rowIndex: number;
+    let colIndex: number;
+    let currentPlayer: blockEnum;
+    let board: blockEnum[][];
+
+    it('should be a win if Player `X` draws three in a row', function() {
+      rowIndex = 1;
+      colIndex = 2;
+
+      currentPlayer = blockEnum.xPlayer;
+
+      board =  [
+        [blockEnum.xPlayer, blockEnum.EMPTY, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isGameWon()).toBeTruthy();
+      expect(component.ResultMessage).toBe(`Player X wins the game!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+
+    it('should be a win if Player `O` draws three in a row', function() {
+      rowIndex = 0;
+      colIndex = 1;
+
+      currentPlayer = blockEnum.oPlayer;
+
+      board =  [
+        [blockEnum.xPlayer, blockEnum.EMPTY, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.xPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isGameWon()).toBeTruthy();
+      expect(component.ResultMessage).toBe(`Player O wins the game!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+  });
 });
 
 function triggerUpdate(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
