@@ -252,6 +252,52 @@ describe('Players cannot play on a played position', function() {
       expect(component.isGameOver).toBeTruthy();
     });
   });
+  describe('If all nine squares are filled and neither player has three in a row, the game is a draw.', function(){
+
+    let rowIndex: number;
+    let colIndex: number;   
+    let board: blockEnum[][];
+
+    it('should be a draw if Player `X` doesn`t have three in a row', function() {
+
+      rowIndex = 1;
+      colIndex = 2;
+
+      board =  [
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.xPlayer],
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.oPlayer, blockEnum.xPlayer, blockEnum.oPlayer]
+      ];
+
+      component.board = board;
+      component.currentPlayer = blockEnum.xPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isGameDraw()).toBeTruthy();
+      expect(component.ResultMessage).toBe(`It\'s a Draw!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+
+    it('should be a draw if Player `O` doesn`t have three in a row', function() {
+
+      rowIndex = 2;
+      colIndex = 2;
+
+      board =  [
+        [blockEnum.xPlayer, blockEnum.oPlayer, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.xPlayer, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.xPlayer, blockEnum.EMPTY]
+      ];
+
+      component.currentPlayer = blockEnum.oPlayer;
+      component.board = board;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+      expect(component.isGameDraw()).toBeTruthy();
+      expect(component.ResultMessage).toBe(`It\'s a Draw!`);
+      expect(component.isGameOver).toBeTruthy();
+    });
+  });
 });
 
 function triggerUpdate(fixture: ComponentFixture<BoardComponent>, rowIndex: number, colIndex: number, component: BoardComponent) {
