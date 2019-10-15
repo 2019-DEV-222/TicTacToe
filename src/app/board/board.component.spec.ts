@@ -122,6 +122,25 @@ describe('Players cannot play on a played position', function() {
       expect(component.currentPlayer).toBe(blockEnum.oPlayer);
       expect(component.ResultMessage).toBe(`It\'s Player O\'s turn`);
     });
+    
+    it('should continue game if no player has three in a row horizontally', function () {
+      rowIndex = 2;
+      colIndex = 2;
+      currentPlayer = blockEnum.oPlayer;
+
+      board = [
+        [blockEnum.xPlayer, blockEnum.EMPTY, blockEnum.xPlayer],
+        [blockEnum.oPlayer, blockEnum.oPlayer, blockEnum.EMPTY],
+        [blockEnum.EMPTY, blockEnum.EMPTY, blockEnum.EMPTY]
+      ];
+      component.board = board;
+      component.currentPlayer = currentPlayer;
+      component.updateBoard(rowIndex, colIndex);
+      fixture.detectChanges();
+
+      expect(component.isThreeHorizontally()).toBeFalsy();
+      expect(component.isGameOver).toBeFalsy();
+    });
   });
 });
 
