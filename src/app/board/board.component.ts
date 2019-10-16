@@ -56,6 +56,10 @@ export class BoardComponent implements OnInit {
     this.ResultMessage = `It's Player ${this.currentPlayer}'s turn`;
   }
 
+  isThreeInLine(): boolean {
+    return (this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
+  }
+
   isThreeHorizontally(): boolean {    
     let threeHorizontally = false;
     for (const rowArray of this.board) {
@@ -88,7 +92,6 @@ export class BoardComponent implements OnInit {
   }
 
   isBoardFull(): boolean {
-    let threeInLine = false;
 
     for (const colArray of this.board){
       for (const blockItem of colArray){
@@ -96,16 +99,14 @@ export class BoardComponent implements OnInit {
           return false;
         }
       }
-    }    
-    threeInLine = !(this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
-    return threeInLine;
+    }        
+    return !this.isThreeInLine();
   }
 
-  isGameWon(): boolean {
-    let threeInLine = false;
-    threeInLine = (this.isThreeHorizontally() || this.isThreeVertically() || this.isThreeDiagonally());
-    return threeInLine;
+  isGameWon(): boolean {     
+    return this.isThreeInLine();
   }
+
   isGameDraw(): boolean {
     return this.isBoardFull();
   }
